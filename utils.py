@@ -32,4 +32,14 @@ def my_plot_pie(data, title='',suptitle=''):
     plt.title(title)
     plt.suptitle(suptitle)                 
     plt.axis('equal')
-    plt.show()
+#    plt.show()
+
+def format_vertical_headers(df):
+    """Display a dataframe with vertical column headers"""
+    styles = [dict(selector="th", props=[('width', '40px')]),
+              dict(selector="th.col_heading",
+                   props=[("writing-mode", "vertical-rl"),
+                          ('transform', 'rotateZ(180deg)'), 
+                          ('height', '150px'),
+                          ('vertical-align', 'top')])]
+    return (df.fillna('').style.set_table_styles(styles))
