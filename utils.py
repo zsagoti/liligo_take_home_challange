@@ -32,4 +32,26 @@ def my_plot_pie(data, title='',suptitle=''):
     plt.title(title)
     plt.suptitle(suptitle)                 
     plt.axis('equal')
-    plt.show()
+#    plt.show()
+
+def format_vertical_headers(df):
+    """Display a dataframe with vertical column headers"""
+    styles = [dict(selector="th", props=[('width', '40px')]),
+              dict(selector="th.col_heading",
+                   props=[("writing-mode", "vertical-rl"),
+                          ('transform', 'rotateZ(180deg)'), 
+                          ('height', '150px'),
+                          ('vertical-align', 'top')])]
+    return (df.fillna('').style.set_table_styles(styles))
+
+def highlight_max(s):
+    is_max = s == s.max()
+    return ['background-color: yellow' if v else '' for v in is_max]
+
+def calc_review_means(group, review_features):
+    review_means=pd.DataFrame()
+    for feat in review_features[1:]:
+        review_means[feat]=group[feat]*group['number_of_reviews']
+    review_means['number_of_reviews']=group['number_of_reviews']
+
+    return review_means.sum(axis=0)/review_means['number_of_reviews'].sum()
